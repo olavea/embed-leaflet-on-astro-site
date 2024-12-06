@@ -1,18 +1,27 @@
 ---
+// @ts-nocheck
 export interface Props {
-  latitude: number
-  longitude: number
-  zoom: number
+  latitude: number;
+  longitude: number;
+  zoom: number;
   /** the DOM ID of a <div> element */
-  container: string
+  container: string;
   /** https://leafletjs.com/reference.html#tilelayer */
-  tileLayer: string
+  tileLayer: string;
   /** Most tile servers require attribution. */
-  attribution: string
-  containerstyle?: string
+  attribution: string;
+  containerstyle?: string;
 }
 
-const { latitude, longitude, zoom, container, tileLayer, attribution, containerstyle = "height: 61.8vh" } = Astro.props
+const {
+  latitude,
+  longitude,
+  zoom,
+  container,
+  tileLayer,
+  attribution,
+  containerstyle = "height: 61.8vh",
+} = Astro.props;
 ---
 
 <leaflet-map
@@ -24,24 +33,30 @@ const { latitude, longitude, zoom, container, tileLayer, attribution, containers
   data-attribution={attribution}
   data-containerstyle={containerstyle}
 >
-<div id={container} style={containerstyle}></div>
-<script>
-  import "leaflet/dist/leaflet"
-  import "leaflet/dist/leaflet.css"
-  
-  class LeafletMap extends HTMLElement {
-    constructor() {
-      super()
+  <div id={container} style={containerstyle}></div>
+  <script>
+    import "leaflet/dist/leaflet";
+    import "leaflet/dist/leaflet.css";
 
-      const latlng = [Number(this.dataset.latitude), Number(this.dataset.longitude)]
+    class LeafletMap extends HTMLElement {
+      constructor() {
+        super();
 
-      var map = L.map(this.dataset.container).setView(latlng, Number(this.dataset.zoom))
-      L.tileLayer(
-        this.dataset.tiles,
-        {attribution: this.dataset.attribution}
-        ).addTo(map)
+        const latlng = [
+          Number(this.dataset.latitude),
+          Number(this.dataset.longitude),
+        ];
+
+        var map = L.map(this.dataset.container).setView(
+          latlng,
+          Number(this.dataset.zoom)
+        );
+        L.tileLayer(this.dataset.tiles, {
+          attribution: this.dataset.attribution,
+        }).addTo(map);
+      }
     }
-  }
 
-  window.customElements.define("leaflet-map", LeafletMap);
-</script>
+    window.customElements.define("leaflet-map", LeafletMap);
+  </script></leaflet-map
+>
