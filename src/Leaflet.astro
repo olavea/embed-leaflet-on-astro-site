@@ -54,6 +54,11 @@ const {
         L.tileLayer(this.dataset.tiles, {
           attribution: this.dataset.attribution,
         }).addTo(map);
+
+        L.marker([32.795595, -117.259191])
+          .addTo(map)
+          .bindPopup("Captain Cod.<br> Classy Seafood.")
+          .openPopup();
       }
     }
 
